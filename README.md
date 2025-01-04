@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains a collection of small, self-contained programs written in **JavaScript**, **Go**, and **Python**. Each program demonstrates solutions to simple problems, algorithm implementations, or concepts in programming. The goal is to explore language-specific features, patterns, and techniques.
+This repository contains a collection of small, self-contained programs written in **JavaScript**, **PHP**, and **Python**. Each program demonstrates solutions to simple problems, algorithm implementations, and concepts in programming. The goal is to explore language-specific features, programming patterns and techniques, and deepen my knowledge and understanding on these programming languages.
 
 ---
 
@@ -12,9 +12,9 @@ This repository contains a collection of small, self-contained programs written 
 
 To run the programs, ensure you have the following installed:
 
-- **JavaScript**: [Node.js](https://nodejs.org/) (recommended for running JavaScript files).
-- **Go**: [Go Programming Language](https://golang.org/).
-- **Python**: [Python](https://www.python.org/) (version 3.8 or above recommended).
+- **JavaScript**: [Node.js](https://nodejs.org/)
+- **PHP**: [PHP](https://www.php.net/)  
+- **Python**: [Python](https://www.python.org/)
 
 ---
 
@@ -28,10 +28,10 @@ Navigate to the respective folder and execute the programs:
 node script.js
 ```
 
-#### Go
+#### PHP
 
 ```bash
-go run main.go
+php index.php
 ```
 
 #### Python

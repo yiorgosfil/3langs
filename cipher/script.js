@@ -1,9 +1,9 @@
 const text = 'Hello Zaira'
 shift = 3
+const alphabet = 'abcdefghijklmnopqrstuvwxyzl'
 
 // Caesar Implementation
 function caesar(message, offset) {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   let encryptedText = ''
 
   for (char of message.toLowerCase()) {
@@ -15,18 +15,17 @@ function caesar(message, offset) {
       encryptedText += alphabet[newIndex]
     }
   }
-  console.log('plain text: ', message)
-  console.log('encrypted text: ', encryptedText)
+  return `Plain text: ${message}\nEncrypted text: ${encryptedText}`
 }
 
-caesar(text, shift)
+console.log(caesar(text, shift))
 
 // Vigenere Implementation
 const customKey = 'python'
 
 function vigenere(message, key, direction = 1) {
   let keyIndex = 0
-  alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   let finalMessage = ''
 
   for (char of message.toLowerCase()) {
@@ -40,9 +39,31 @@ function vigenere(message, key, direction = 1) {
 
       // Define the offset and the encrypted/decrypted letter 
       let offset = alphabet.indexOf(keyChar)
-      let index = alphabet.int
+      let index = alphabet.indexOf(char)
+      let newIndex = (index + offset * direction) % alphabet.length
+      finalMessage += alphabet[newIndex]
     }
   }
-
+  return finalMessage
 }
+
+// console.log(vigenere(text, customKey))
+
+/*
+function encrypt(message, key) {
+  return vigenere(message, key)
+}
+
+function decrypt(message, key) {
+  return vigenere(message, key, -1)
+}
+
+const textToDecrypt = 'mrttaqrhknsw ih puggrur'
+customKeyForDecryption = 'happycoding'
+
+console.log(`Encrypted text: ${textToDecrypt}`)
+console.log(`Key: ${customKeyForDecryption}`)
+
+const decryptionII = decrypt(textToDecrypt, customKeyForDecryption)
+console.log(decryptionII)
 */

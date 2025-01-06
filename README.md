@@ -25,6 +25,7 @@ Navigate to the respective folder and execute the programs:
 #### JavaScript
 
 ```bash
+npm install # optional
 tsc script.ts
 node script.js
 ```

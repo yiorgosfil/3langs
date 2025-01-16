@@ -10,7 +10,7 @@ class Board:
             board_str += '\n'
         return board_str
 
-    # Find the first empty cell on the board && return their indices
+    # Find the first empty cell on the board && its indices
     def find_empty_cell(self):
         # row -> row index && contents -> list of values in that row
         for row, contents in enumerate(self.board):

@@ -1,72 +1,69 @@
-var Board = /** @class */ (function () {
-    function Board(board) {
+"use strict";
+class Board {
+    constructor(board) {
         this.board = board;
     }
-    Board.prototype.arrToString = function () {
-        var boardStr = '';
-        for (var _i = 0, _a = this.board; _i < _a.length; _i++) {
-            var row = _a[_i];
-            var rowStr = row.map(function (cell) { return cell != null ? cell.toString() : '*'; });
+    arrToString() {
+        let boardStr = '';
+        for (const row of this.board) {
+            const rowStr = row.map(cell => cell != null ? cell.toString() : '*');
             boardStr += rowStr.join(' ');
             boardStr += '\n';
         }
         return boardStr;
-    };
+    }
+    // Override the default toString method from the Object prototype
+    toString() {
+        return this.arrToString();
+    }
     // Find the first empty cell on the board and return its indices 
-    Board.prototype.findEmptyCell = function () {
-        for (var _i = 0, _a = this.board.entries(); _i < _a.length; _i++) {
-            var _b = _a[_i], rowIndex = _b[0], rowValues = _b[1];
-            try {
-                var colIndex = rowValues.indexOf(0);
-                return [rowIndex, colIndex];
-            }
-            catch (error) {
-                continue;
-            }
+    findEmptyCell() {
+        for (const [rowIndex, rowValues] of this.board.entries()) {
+            const colIndex = rowValues.indexOf(0);
+            return [rowIndex, colIndex];
         }
         return null;
-    };
+    }
     // Check if a given number can be inserted into the row 
-    Board.prototype.validInRow = function (rowIndex, num) {
-        return this.board[rowIndex].includes(num);
-    };
+    validInRow(rowIndex, num) {
+        return !this.board[rowIndex].includes(num);
+    }
     // Check if a given number can be inserted into the column
-    Board.prototype.validInCol = function (colIndex, num) {
-        var _this = this;
+    validInCol(colIndex, num) {
         return Array
             .from({ length: 9 })
-            .every(function (_, rowIndex) { return _this.board[rowIndex][colIndex] !== num; });
-    };
+            .every((_, rowIndex) => this.board[rowIndex][colIndex] !== num);
+    }
     // Check if a given number can be inserted in a 3x3 square on the board 
-    Board.prototype.validInSquare = function (rowIndex, colIndex, num) {
-        var rowStart = Math.floor(rowIndex / 3) * 3;
-        var colStart = Math.floor(colIndex / 3) * 3;
-        for (var rowNo = rowStart; rowNo < (rowStart + 3); rowNo++) {
-            for (var colNo = colStart; colNo < (colStart + 3); colNo++) {
+    validInSquare(rowIndex, colIndex, num) {
+        const rowStart = Math.floor(rowIndex / 3) * 3;
+        const colStart = Math.floor(colIndex / 3) * 3;
+        for (let rowNo = rowStart; rowNo < (rowStart + 3); rowNo++) {
+            for (let colNo = colStart; colNo < (colStart + 3); colNo++) {
                 if (this.board[rowNo][colNo] == num) {
                     return false;
                 }
             }
         }
         return true;
-    };
+    }
     // Check if given number is valid ofr an empty cell 
-    Board.prototype.isValid = function (emptyCell, num) {
-        var rowIndex = emptyCell[0], colIndex = emptyCell[1];
-        var isValidInRow = this.validInRow(rowIndex, num);
-        var isValidInCol = this.validInCol(colIndex, num);
-        var isValidInSquare = this.validInSquare(rowIndex, colIndex, num);
+    isValid(emptyCell, num) {
+        const [rowIndex, colIndex] = emptyCell;
+        const isValidInRow = this.validInRow(rowIndex, num);
+        const isValidInCol = this.validInCol(colIndex, num);
+        const isValidInSquare = this.validInSquare(rowIndex, colIndex, num);
         return [isValidInRow, isValidInCol, isValidInSquare].every(Boolean);
-    };
-    Board.prototype.solver = function () {
+    }
+    solver() {
         // Find the next empty cell 
-        var nextEmpty = this.findEmptyCell();
+        let nextEmpty = this.findEmptyCell();
         if (nextEmpty == null) {
             return true;
         }
-        for (var guess = 1; guess < 10; guess++) {
+        for (let guess = 1; guess < 10; guess++) {
             if (this.isValid(nextEmpty, guess)) {
-                var rowIndex = nextEmpty[0], colIndex = nextEmpty[1];
+                const [rowIndex, colIndex] = nextEmpty;
                 this.board[rowIndex][colIndex] = guess;
                 // Check if the board can be solved 
                 if (this.solver()) {
@@ -77,21 +74,20 @@ var Board = /** @class */ (function () {
             }
         }
         return false;
-    };
-    return Board;
-}());
+    }
+}
 function sudokuSolver(board) {
-    var gameboard = new Board(board);
-    console.log("Puzzle to solve:\n ".concat(gameboard));
+    const gameboard = new Board(board);
+    console.log(`Puzzle to solve:\n ${gameboard}`);
     if (gameboard.solver()) {
-        console.log("Solved puzzle:\n ".concat(gameboard));
+        console.log(`Solved puzzle:\n ${gameboard}`);
     }
     else {
         console.log('The provided puzzle is unsolvable.');
     }
     return gameboard;
 }
-var boardToSolve = [
+const boardToSolve = [
     [0, 0, 2, 0, 0, 8, 0, 0, 0],
     [0, 0, 0, 0, 0, 3, 7, 6, 2],
     [4, 3, 0, 0, 0, 0, 8, 0, 0],

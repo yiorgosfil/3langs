@@ -15,22 +15,23 @@ class Board {
     return boardStr
   }
 
+  // Override the default toString method from the Object prototype
+  toString(): string {
+    return this.arrToString()
+  }
+
   // Find the first empty cell on the board and return its indices 
-  findEmptyCell(): number[] | null {
+  findEmptyCell(): [number, number] | null {
     for (const [rowIndex, rowValues] of this.board.entries()) {
-      try {
-        const colIndex = rowValues.indexOf(0)
-        return [rowIndex, colIndex]
-      } catch (error) {
-        continue
-      }
+      const colIndex = rowValues.indexOf(0)
+      return [rowIndex, colIndex]
     }
     return null
   }
 
   // Check if a given number can be inserted into the row 
   validInRow(rowIndex: number, num: number): boolean {
-    return this.board[rowIndex].includes(num)
+    return !this.board[rowIndex].includes(num)
   }
 
   // Check if a given number can be inserted into the column
@@ -58,7 +59,7 @@ class Board {
   }
 
   // Check if given number is valid ofr an empty cell 
-  isValid(emptyCell: number[], num: number): boolean {
+  isValid(emptyCell: [number, number], num: number): boolean {
     const [rowIndex, colIndex] = emptyCell
     const isValidInRow = this.validInRow(rowIndex, num)
     const isValidInCol = this.validInCol(colIndex, num)

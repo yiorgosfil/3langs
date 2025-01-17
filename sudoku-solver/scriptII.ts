@@ -1,3 +1,5 @@
+// tsc scriptII.ts --lib es2016,dom --target es2015 --strict
+
 class BoardII {
   private board: number[][]
 

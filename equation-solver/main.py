@@ -141,5 +141,57 @@ class QuadraticEquation(Equation):
         return {'x': x, 'y': y, 'min/max': min_max, 'concavity': concavity}
 
 # TODO: Function to solve and dislay equation information
+def solver(equation):
+    """
+    Solves the given equation and provides a fromatted output of its properties
+    :param equation: An instance of LinearEquation or QuadraticEquation
+    :return: A formatted string with the equation's solutions and details 
+    :raises TypeError: If the argument is not an equation object
+    """
+
+    if not isinstance(equation, Equation):
+        raise TypeError('Argument must be an equation object')
+
+    # Display equation type and formatted equation 
+    output_string = f'\n{equation.type:-^24}'
+    output_string += f'\n\n{equation!s:^24}\n\n'
+
+    # Solve equation and format sulutions 
+    output_string += f'\n\n{"Solutions":-^24}\n\n'
+    results = equation.solve()
+
+    match results:
+        case []:
+            result_list = ['No real roots']
+        case [x]:
+            result_list = [f'x = {x:+.3f}']
+        case [x1, x2]:
+            result_list = [f'x1 = {x1:+.3f}', f'x2 = {x2:+.3f}']
+
+    for result in result_list:
+        output_string += f'{result:^24}\n'
+
+    # Analyze equation and format additional details
+    output_string += f'\n{"Details":-^24}\n\n'
+    details = equation.analyze()
+
+    match details:
+        case {'slope': slope, 'intercept': intercept}:
+            details_list = [f'slope = {slope:>16.3f}', f'y-intercept = {intercept:>10.3f}']
+        case {'x': x, 'y': y, 'min/max': min_max, 'concavity': concavity}:
+            coord = f'({x:.3f}, {y:.3f})'
+            details_list = [f'concavity = {concavity:>12}', f'{min_max} = {coord:>18}']
+
+    for detail in details_list:
+        output_string += f'{detail}\n'
+
+    return output_string
+
+# Example usage
+lin_eq = LinearEquation(2, 3)
+print(solver(lin_eq))
+quadr_eq = QuadraticEquation(1, 6, 4)
+print(solver(quadr_eq))
+
 
 
